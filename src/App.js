@@ -9,7 +9,7 @@ const Big = require('big.js');
 class App extends Component {
     state = {
         form: {
-            sum: 1000000,
+            sum: 500000,
             rate: 14,
             term: 10
         },
@@ -76,7 +76,7 @@ class App extends Component {
                         <div className="col col-lg-4 calculation">
                             <div className="card p-3 mb-3">
                                 <p className="mb-0">
-                                    Ежемесячный платеж: <span className="float-right">{fullSum}</span>
+                                    Сумма за весь срок: <span className="float-right">{fullSum}</span>
                                 </p>
                             </div>
                             <div className="card p-3 mb-3">

@@ -1,22 +1,38 @@
 import React, { Component } from "react";
+import Select from 'react-select';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import 'react-select/dist/react-select.css';
 
 class FormCalc extends Component {
-    updateSum = (sum) => {
-        this.props.updateForm({sum: +sum});
+    getRates = () => {
+        const options = [];
+        for(let i=9, len=18; i<len; i+=0.5) {
+            options.push({
+                label: `${i+1}`,
+                value: `${i+1}`
+            });
+        }
+        return options;
     };
 
-    updateRate = (rate) => {
-        this.props.updateForm({rate: +rate});
+    updateSum = (value) => {
+        const sum = parseInt(value, 10);
+        this.props.updateForm({sum: isNaN(sum) ? 0 : sum});
     };
 
-    updateTerm = (term) => {
-        this.props.updateForm({term: +term});
+    updateRate = (value) => {
+        const rate = value;
+        this.props.updateForm({rate: isNaN(rate) ? 0 : rate});
+        this.props.onSubmit();
+    };
+
+    updateTerm = (value) => {
+        const term = parseInt(value, 10);
+        this.props.updateForm({term: isNaN(term) ? 0 : term});
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log('frefs');
         this.props.onSubmit();
     };
 
@@ -32,13 +48,22 @@ class FormCalc extends Component {
                         onChange={(e) => this.updateSum(e.target.value)}
                     />
                 </FormGroup>
+                {/*<FormGroup>*/}
+                    {/*<Label for="percent">Процентная ставка</Label>*/}
+                    {/*<Input*/}
+                        {/*type="text"*/}
+                        {/*placeholder="Проценты"*/}
+                        {/*value={this.props.form.rate}*/}
+                        {/*onChange={(e) => this.updateRate(e.target.value)}*/}
+                    {/*/>*/}
+                {/*</FormGroup>*/}
                 <FormGroup>
-                    <Label for="percent">Процентная ставка</Label>
-                    <Input
-                        type="text"
-                        placeholder="Проценты"
+                    <Label>Процентная ставка</Label>
+                    <Select
+                        options={this.getRates()}
                         value={this.props.form.rate}
-                        onChange={(e) => this.updateRate(e.target.value)}
+                        simpleValue
+                        onChange={this.updateRate}
                     />
                 </FormGroup>
                 <FormGroup>
